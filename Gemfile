@@ -11,15 +11,27 @@ gem 'therubyracer'
 gem 'jquery-rails'
 
 group :development, :test do
-  gem 'byebug'
+  gem 'pry'
 end
 
 group :development do
+  gem 'annotate'
+
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem 'rspec-rails'
 end
 
-gem 'knock'
+group :test do
+  gem 'fabrication'
+  gem 'faker'
+end
+
+gem 'bcrypt'
+gem 'jwt'
 gem 'graphql'
+gem 'dry-validation'
+gem 'request_store'

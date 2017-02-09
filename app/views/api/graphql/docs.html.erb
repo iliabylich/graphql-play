@@ -1,0 +1,13 @@
+<div id='root'></div>
+
+<script type="text/javascript">
+  function graphQLFetcher(graphQLParams) {
+    return fetch(window.location.origin + '/api/graph', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(graphQLParams),
+    }).then(response => response.json());
+  }
+
+  ReactDOM.render(React.createElement(GraphiQL, { fetcher: graphQLFetcher }), document.getElementById('root'))
+</script>
