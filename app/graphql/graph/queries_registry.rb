@@ -14,6 +14,7 @@ Graph::QueriesRegistry = GraphQL::ObjectType.define do
     argument :skip, types.Int, default_value: 0
     argument :limit, types.Int, default_value: 20
     argument :name, types.String
+    description "List users"
     resolve Graph::Queries::Users::All
   end
 end

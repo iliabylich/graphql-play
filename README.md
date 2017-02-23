@@ -1,24 +1,14 @@
-# README
+```
+git clone https://github.com/iliabylich/graphql-play.git
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+cd graphql-play
+bundle
 
-Things you may want to cover:
+rake db:create db:migrate
+rails s
 
-* Ruby version
+open http://localhost:3000/api/docs
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+RAILS_ENV=test rale db:create db:migrate
+rspec
+```

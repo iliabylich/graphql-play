@@ -1,7 +1,8 @@
 Graph::Types::User = GraphQL::ObjectType.define do
-  name 'UserRecord'
+  name 'User'
+  description 'User Record Representation'
 
-  field :id, !types.Int
-  field :email, !types.String
-  field :name, !types.String
+  field :id, !types.Int, "User's ID"
+  field :email, !types.String, "User's email"
+  field :name, !types.String, "User's name"
 end
