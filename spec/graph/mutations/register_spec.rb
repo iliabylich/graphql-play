@@ -1,37 +1,36 @@
 RSpec.describe 'Graph::Mutations::Register', name: 'register' do
-  def query(email:, password:, name:)
-    <<-QUERY
-      mutation {
-        register(input: { email: "#{email}", password: "#{password}", name: "#{name}"}) {
-          success
-          user {
-            id
-            name
-            email
-          }
-          errors {
-            field
-            messages
-          }
+  query_string = <<-QUERY
+    mutation RegisterUser($email: String!, $password: String!, $name: String!) {
+      register(input: { email: $email, password: $password, name: $name }) {
+        success
+        user {
+          id
+          name
+          email
+        }
+        errors {
+          field
+          messages
         }
       }
-    QUERY
-  end
+    }
+  QUERY
 
   context 'when params are valid' do
-    let(:valid_query) { query(email: 'email@email.com', password: 'password', name: 'name') }
+    let(:variables) { { 'email' => 'email@email.com', 'password' => 'password', 'name' => 'name' } }
 
     it 'creates a user' do
       expect {
-        Graph::Schema.execute(valid_query)
+        Graph::Schema.execute(query_string, variables: variables)
       }.to change { User.count }.by(1)
     end
 
     it 'returns created user and token' do
-      result = Graph::Schema.execute(valid_query)['data']['register']
+      result = Graph::Schema.execute(query_string, variables: variables)
+      data = result['data']['register']
       user = User.last
 
-      expect(result).to include(
+      expect(data).to include(
         'success' => true,
         'user' => {
           'id' => user.id,
@@ -44,20 +43,21 @@ RSpec.describe 'Graph::Mutations::Register', name: 'register' do
   end
 
   context 'when invalid credentials specified' do
-    let(:invalid_query) { query(email: 'not-an-email', password: '123', name: 'name') }
+    let(:variables) { { 'email' => 'not-an-email', 'password' => '123', 'name' => 'name' } }
 
     it 'does not create a user' do
       expect {
-        Graph::Schema.execute(invalid_query)
+        Graph::Schema.execute(query_string, variables: variables)
       }.to_not change {
         User.count
       }
     end
 
     it 'returns back only errors' do
-      result = Graph::Schema.execute(invalid_query)['data']['register']
+      result = Graph::Schema.execute(query_string, variables: variables)
+      data = result['data']['register']
 
-      expect(result).to eq(
+      expect(data).to eq(
         'success' => false,
         'user' => nil,
         'errors' => [
