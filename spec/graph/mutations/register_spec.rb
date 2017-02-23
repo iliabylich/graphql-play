@@ -1,4 +1,4 @@
-RSpec.describe Graph::Mutations::Register, name: 'register' do
+RSpec.describe 'Graph::Mutations::Register', name: 'register' do
   def query(email:, password:, name:)
     <<-QUERY
       mutation {

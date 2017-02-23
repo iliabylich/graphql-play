@@ -1,4 +1,4 @@
-RSpec.describe Graph::Mutations::SignIn do
+RSpec.describe 'Graph::Mutations::SignIn' do
   let!(:user) { Fabricate(:user) }
 
   def query(email:, password:)

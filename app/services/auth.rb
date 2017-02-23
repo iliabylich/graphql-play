@@ -8,13 +8,8 @@ module Auth
     Rails.application.secrets.secret_key_base
   end
 
-  def try
-    current_user = Auth::TokenVerifier.new(token).user
-    RequestStore[:current_user] = current_user
-  end
-
-  def require_authentication!
-    raise ApiExceptions::AuthenticationRequired unless RequestStore[:current_user]
+  def require!
+    raise ApiExceptions::AuthenticationRequired unless current_user
   end
 
   def current_user

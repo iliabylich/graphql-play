@@ -1,20 +1,6 @@
 class Graph::Queries::Base
-  class << self
-    def call(object, args, context)
-      if requires_authentication?
-        Auth.require_authentication!
-      end
-
-      new(object, args, context).call
-    end
-
-    def requires_authentication!
-      @requires_authentication = true
-    end
-
-    def requires_authentication?
-      !!@requires_authentication
-    end
+  def self.call(object, args, context)
+    new(object, args, context).call
   end
 
   attr_reader :object, :args, :context

@@ -1,23 +1,19 @@
 RSpec.describe Graph::Queries::Users::Find, type: :graphql do
   let!(:user) { Fabricate(:user) }
 
-  def query_template(user_id:)
-    <<-QUERY
-      {
-        user(id: #{user_id}) {
-          id
-          email
-          name
-        }
+  query_string = <<-QUERY
+    query findUser($user_id: Int!) {
+      user(id: $user_id) {
+        id
+        email
+        name
       }
-    QUERY
-  end
-
-  let(:query) { query_template(user_id: user.id) }
+    }
+  QUERY
 
   context 'when existing user ID specified' do
     it 'returns it' do
-      result = Graph::Schema.execute(query)
+      result = Graph::Schema.execute(query_string, variables: { 'user_id' => user.id })
       expect(result['data']['user']).to eq(
         'id' => user.id,
         'email' => user.email,
@@ -27,10 +23,8 @@ RSpec.describe Graph::Queries::Users::Find, type: :graphql do
   end
 
   context 'when unknown user ID specified' do
-    let(:invalid_query)  { query_template(user_id: 0) }
-
     it 'returns blank data' do
-      result = Graph::Schema.execute(invalid_query)
+      result = Graph::Schema.execute(query_string, variables: { 'user_id' => 0 })
       expect(result['data']['user']).to eq(nil)
     end
   end

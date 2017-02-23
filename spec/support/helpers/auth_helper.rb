@@ -1,13 +1,11 @@
 module AuthHelper
-  def mock_authentication
-    before(:each) do
-      allow(Auth).to receive(:require_authentication!).and_return(true)
-    end
+  def sign_in(user = Fabricate(:user))
+    RequestStore[:current_user] = user
   end
 end
 
 RSpec.configure do |c|
-  c.extend AuthHelper, type: :graphql
+  c.include AuthHelper
 end
 
 # @let-dep query [String]
