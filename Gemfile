@@ -34,6 +34,7 @@ end
 gem 'bcrypt'
 gem 'jwt'
 gem 'graphql'
+gem 'graphql-batch'
 gem 'dry-validation'
 gem 'request_store'
 gem 'dry-transaction'
