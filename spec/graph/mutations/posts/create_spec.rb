@@ -25,7 +25,7 @@ RSpec.describe 'Graph::Mutations::Posts::Create' do
     end
   end
 
-  context 'when use is signed in' do
+  context 'when user is signed in' do
     let!(:user) { Fabricate(:user) }
     before { sign_in(user) }
 

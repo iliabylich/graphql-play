@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  errors:
+    users:
+      doesnt_exist: "User with specified ID doesn't exist"
+    follow:
+      duplicate: "You can't follow the same user twice"
+    unfollow:
+      cant_unfollow: "You are not following this user so you can't unfollow"

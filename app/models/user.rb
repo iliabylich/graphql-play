@@ -26,4 +26,8 @@ class User < ApplicationRecord
     foreign_key: :follower_id,
     association_foreign_key: :following_id,
     class_name: 'User'
+
+  def follows?(user)
+    followings.include?(user)
+  end
 end

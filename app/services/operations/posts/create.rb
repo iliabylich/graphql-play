@@ -1,7 +1,7 @@
 class Operations::Posts::Create < Operations::Base
   class Container < ApplicationContainer
     register :persist, ->(params) {
-      post = RequestStore[:current_user].posts.create(params)
+      post = Auth.current_user.posts.create(params)
       Dry::Monads.Right(post: post, success: true, errors: [])
     }
   end
