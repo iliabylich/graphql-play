@@ -2,9 +2,9 @@ class Operations::SignIn < Operations::Base
   class Container
     extend Dry::Container::Mixin
 
-    register :authenticate, ->(params) {
-      user = User.find_by(email: params[:email])
-      if user && user.authenticate(params[:password])
+    register :authenticate, ->(email:, password:) {
+      user = User.find_by(email: email)
+      if user && user.authenticate(password)
         Dry::Monads.Right(user)
       else
         Dry::Monads.Left(user: nil, success: false, access_token: nil)
