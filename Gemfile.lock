@@ -67,6 +67,14 @@ GEM
       dry-container (~> 0.2, >= 0.2.6)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
+    dry-matcher (0.6.0)
+    dry-monads (0.2.1)
+      dry-equalizer
+    dry-transaction (0.9.0)
+      dry-container (>= 0.2.8)
+      dry-matcher (>= 0.5.0)
+      dry-monads (>= 0.0.1)
+      wisper (>= 1.6.0)
     dry-types (0.9.4)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1)
@@ -120,6 +128,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.5)
+      pry (>= 0.9.10)
     puma (3.7.0)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -208,6 +218,7 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    wisper (1.6.1)
 
 PLATFORMS
   ruby
@@ -216,6 +227,8 @@ DEPENDENCIES
   annotate
   bcrypt
   coffee-rails (~> 4.2)
+  dry-monads
+  dry-transaction
   dry-validation
   fabrication
   faker
@@ -225,6 +238,7 @@ DEPENDENCIES
   listen (~> 3.0.5)
   mysql2
   pry
+  pry-rails
   puma (~> 3.0)
   rails (~> 5.0.1)
   request_store

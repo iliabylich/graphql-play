@@ -12,6 +12,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'pry'
+  gem 'pry-rails'
 end
 
 group :development do
@@ -35,3 +36,5 @@ gem 'jwt'
 gem 'graphql'
 gem 'dry-validation'
 gem 'request_store'
+gem 'dry-transaction'
+gem 'dry-monads'

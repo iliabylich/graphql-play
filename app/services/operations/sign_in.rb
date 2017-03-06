@@ -1,20 +1,28 @@
 class Operations::SignIn < Operations::Base
-  attr_reader :user, :access_token
+  class Container
+    extend Dry::Container::Mixin
 
-  def call
-    user = User.find_by(email: params[:email])
+    register :authenticate, ->(params) {
+      user = User.find_by(email: params[:email])
+      if user && user.authenticate(params[:password])
+        Dry::Monads.Right(user)
+      else
+        Dry::Monads.Left(user: nil, success: false, access_token: nil)
+      end
+    }
 
-    if user && user.authenticate(params[:password])
-      RequestStore[:current_user] = @user = user,
-      @access_token = Auth::TokenGenerator.new(user).token
-    end
+    register :generate_access_token, ->(user) {
+      access_token = Auth::TokenGenerator.new(user).token
+      Dry::Monads.Right(user: user, success: true, access_token: access_token)
+    }
   end
 
-  def payload
-    {
-      user: user,
-      success: !!user,
-      access_token: access_token
-    }
+  TRANSACTION = Dry.Transaction(container: Container) do
+    step :authenticate
+    step :generate_access_token
+  end.freeze
+
+  def call
+    ActiveRecord::Base.transaction { TRANSACTION.call(params) }.value
   end
 end
