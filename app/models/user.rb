@@ -14,4 +14,16 @@ class User < ApplicationRecord
   has_secure_password validations: false
 
   has_many :posts
+
+  has_and_belongs_to_many :followers,
+    join_table: :follow_relations,
+    foreign_key: :following_id,
+    association_foreign_key: :follower_id,
+    class_name: 'User'
+
+  has_and_belongs_to_many :followings,
+    join_table: :follow_relations,
+    foreign_key: :follower_id,
+    association_foreign_key: :following_id,
+    class_name: 'User'
 end

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224151027) do
+ActiveRecord::Schema.define(version: 20170306145201) do
+
+  create_table "follow_relations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "follower_id",  null: false
+    t.integer "following_id", null: false
+    t.index ["follower_id"], name: "fk_rails_9ccf084245", using: :btree
+    t.index ["following_id"], name: "fk_rails_aedf1ef104", using: :btree
+  end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title",                    null: false
@@ -29,5 +36,7 @@ ActiveRecord::Schema.define(version: 20170224151027) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "follow_relations", "users", column: "follower_id", on_delete: :cascade
+  add_foreign_key "follow_relations", "users", column: "following_id", on_delete: :cascade
   add_foreign_key "posts", "users"
 end
