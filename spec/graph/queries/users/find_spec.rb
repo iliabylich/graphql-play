@@ -14,6 +14,7 @@ RSpec.describe Graph::Queries::Users::Find, type: :graphql do
   context 'when existing user ID specified' do
     it 'returns it' do
       result = Graph::Schema.execute(query_string, variables: { 'user_id' => user.id })
+
       expect(result['data']['user']).to eq(
         'id' => user.id,
         'email' => user.email,

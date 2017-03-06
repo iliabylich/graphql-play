@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Api::BaseController, type: :controller do
   controller do
     def index
