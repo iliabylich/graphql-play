@@ -5,4 +5,6 @@ Graph::Types::Post = GraphQL::ObjectType.define do
   field :id, !types.Int, "Post ID"
   field :title, !types.String, "Post title"
   field :body, !types.String, "Post body"
+
+  field :user, Graph::Types::User
 end

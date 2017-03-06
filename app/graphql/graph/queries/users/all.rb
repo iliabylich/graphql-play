@@ -10,8 +10,8 @@ class Graph::Queries::Users::All < Graph::Queries::Base
   MAX_LIMIT = 20
 
   def paginated
-    limit = [ args[:limit], MAX_LIMIT ].min
-    offset = args[:skip]
+    limit = [ args[:first], MAX_LIMIT ].min
+    offset = args[:after]
     User.limit(limit).offset(offset)
   end
 

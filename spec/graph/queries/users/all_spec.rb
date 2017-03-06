@@ -2,8 +2,8 @@ RSpec.describe Graph::Queries::Users::All, type: :graphql do
   let!(:users) { Fabricate.times(30, :user) }
 
   query_string = <<-QUERY
-    query findUsers($skip: Int, $limit: Int, $name: String) {
-      users(skip: $skip, limit: $limit, name: $name) {
+    query findUsers($after: Int, $first: Int, $name: String) {
+      users(after: $after, first: $first, name: $name) {
         id
         email
         name
@@ -24,9 +24,9 @@ RSpec.describe Graph::Queries::Users::All, type: :graphql do
     end
   end
 
-  context 'when skip specified' do
+  context 'when after specified' do
     it 'skips N users' do
-      result = Graph::Schema.execute(query_string, variables: { 'skip' => 2 })
+      result = Graph::Schema.execute(query_string, variables: { 'after' => 2 })
       users = result['data']['users']
 
       expect(users).to be_an(Array)
@@ -37,9 +37,9 @@ RSpec.describe Graph::Queries::Users::All, type: :graphql do
     end
   end
 
-  context 'when limit specified' do
+  context 'when first specified' do
     it 'return N first users' do
-      result = Graph::Schema.execute(query_string, variables: { 'limit' => 5 })
+      result = Graph::Schema.execute(query_string, variables: { 'first' => 5 })
       users = result['data']['users']
 
       expect(users).to be_an(Array)
